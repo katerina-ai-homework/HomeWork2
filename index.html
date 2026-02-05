@@ -1219,6 +1219,38 @@
             font-weight: 600;
         }
 
+        /* --- ИНДИКАТОР ПРОКРУТКИ (МОБИЛЬНЫЙ) --- */
+        .swipe-indicator {
+            display: none; /* По умолчанию скрыт */
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: linear-gradient(135deg, rgba(216, 166, 169, 0.1), rgba(201, 166, 144, 0.1));
+            border-radius: 30px;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .swipe-indicator i {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            animation: swipeHand 1.5s ease-in-out infinite;
+        }
+
+        .swipe-indicator span {
+            font-size: 0.9rem;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        @keyframes swipeHand {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(10px); }
+        }
+
         /* --- МЕДИА ЗАПРОСЫ --- */
         @media (max-width: 992px) {
             .teachers-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1276,6 +1308,11 @@
             .lightbox-prev { left: 10px; }
             .lightbox-next { right: 10px; }
             .lightbox-nav { width: 40px; height: 40px; font-size: 1.5rem; }
+
+            /* Показываем индикатор прокрутки на мобильных */
+            .swipe-indicator {
+                display: flex;
+            }
         }
 
         @media (max-width: 576px) {
@@ -1480,6 +1517,10 @@
     <section id="gallery" style="background-color: var(--white);">
         <div class="container">
             <h2 class="section-title reveal">Галерея</h2>
+            <div class="swipe-indicator">
+                <i class="fas fa-hand-pointer"></i>
+                <span>Листайте</span>
+            </div>
             <div class="gallery-grid">
                 <div class="gallery-item reveal" data-index="0">
                     <img src="https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=800&auto=format&fit=crop&q=80" alt="Балетный класс" loading="lazy">
@@ -1532,6 +1573,10 @@
     <section id="schedule" class="schedule-section">
         <div class="container">
             <h2 class="section-title reveal">Расписание занятий</h2>
+            <div class="swipe-indicator">
+                <i class="fas fa-hand-pointer"></i>
+                <span>Листайте</span>
+            </div>
             <div class="schedule-table-container">
                 <table class="schedule-table">
                     <thead>
@@ -1669,6 +1714,10 @@
     <section id="teachers">
         <div class="container">
             <h2 class="section-title reveal">Наши педагоги</h2>
+            <div class="swipe-indicator">
+                <i class="fas fa-hand-pointer"></i>
+                <span>Листайте</span>
+            </div>
             <div class="teachers-grid">
                 <!-- 1 -->
                 <div class="teacher-card reveal">
@@ -1757,7 +1806,20 @@
     <!-- CTA Баннер -->
     <section class="cta-banner">
         <div class="container">
-            <div class="cta-visual"><i class="fas fa-shoe-prints"></i></div>
+            <div class="cta-visual">
+                <svg width="80" height="80" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Пуанты - балетные туфельки -->
+                    <ellipse cx="35" cy="75" rx="20" ry="12" fill="rgba(255,255,255,0.9)"/>
+                    <ellipse cx="65" cy="75" rx="20" ry="12" fill="rgba(255,255,255,0.9)"/>
+                    <path d="M20 75 L20 45 Q20 25 35 20 Q50 25 50 45 L50 75" fill="rgba(255,255,255,0.9)"/>
+                    <path d="M50 75 L50 45 Q50 25 65 20 Q80 25 80 45 L80 75" fill="rgba(255,255,255,0.9)"/>
+                    <!-- Шнуровка -->
+                    <line x1="30" y1="35" x2="40" y2="35" stroke="#d8a6a9" stroke-width="2"/>
+                    <line x1="30" y1="45" x2="40" y2="45" stroke="#d8a6a9" stroke-width="2"/>
+                    <line x1="60" y1="35" x2="70" y2="35" stroke="#d8a6a9" stroke-width="2"/>
+                    <line x1="60" y1="45" x2="70" y2="45" stroke="#d8a6a9" stroke-width="2"/>
+                </svg>
+            </div>
             <h2>Готовы сделать первый шаг?</h2>
             <p>Запишитесь на бесплатное пробное занятие и погрузитесь в мир балета с нашими педагогами.</p>
             <button class="btn cta-btn open-modal-btn">Записаться на пробный урок <i class="fas fa-arrow-right" style="margin-left: 10px;"></i></button>
