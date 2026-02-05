@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <!-- Иконки FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
+    
     <style>
         :root {
             --primary-color: #d8a6a9; /* Пыльная роза */
@@ -34,7 +34,7 @@
             color: var(--text-color);
             line-height: 1.6;
             overflow-x: hidden;
-            padding-top: 70px; /* Для фиксированной навигации */
+            padding-top: 70px;
         }
 
         h1, h2, h3, h4 {
@@ -299,7 +299,7 @@
             justify-content: center;
             margin-top: 50px;
         }
-
+        
         .about-grid-special {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -307,7 +307,7 @@
             max-width: 800px;
             width: 100%;
         }
-
+        
         .about-item-special {
             background: linear-gradient(135deg, #f9e6e8, #f5d9db);
             padding: 40px 30px;
@@ -321,7 +321,7 @@
             display: flex;
             flex-direction: column;
         }
-
+        
         .about-item-special::before {
             content: '';
             position: absolute;
@@ -331,12 +331,12 @@
             height: 5px;
             background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
         }
-
+        
         .about-item-special:hover {
             transform: translateY(-10px) scale(1.02);
             box-shadow: 0 15px 30px rgba(216, 166, 169, 0.3);
         }
-
+        
         .about-icon-special {
             font-size: 3.5rem;
             margin-bottom: 25px;
@@ -346,7 +346,7 @@
             background-clip: text;
             display: block;
         }
-
+        
         .about-item-special h3 {
             font-size: 1.5rem;
             margin-bottom: 15px;
@@ -356,7 +356,7 @@
             padding-bottom: 10px;
             margin-top: 0;
         }
-
+        
         .about-item-special h3::after {
             content: '';
             position: absolute;
@@ -429,7 +429,7 @@
             font-weight: bold;
             color: var(--accent-color);
         }
-
+        
         .price-amount { font-size: 1.5rem; }
         .price-period { font-size: 0.9rem; color: var(--text-color); opacity: 0.7; }
 
@@ -448,21 +448,21 @@
             background: var(--white);
             min-width: 700px;
         }
-
+        
         .schedule-table th, .schedule-table td {
             padding: 15px;
             text-align: center;
             border-bottom: 1px solid #eee;
         }
-
+        
         .schedule-table th {
             background-color: var(--primary-color);
             color: var(--white);
             font-weight: 600;
         }
-
+        
         .schedule-table tr:hover { background-color: #f9f9f9; }
-
+        
         .schedule-note {
             text-align: center;
             margin-top: 20px;
@@ -470,8 +470,9 @@
             color: #777;
         }
 
-        /* --- FAQ АККОРДЕОН --- */
-        .faq-container {
+        /* --- FAQ АККОРДЕОН (Переписанный с нуля) --- */
+        /* Используем новые классы acc-* чтобы избежать конфликтов */
+        .acc-container {
             max-width: 800px;
             margin: 0 auto;
             display: flex;
@@ -479,7 +480,7 @@
             gap: 15px;
         }
 
-        .faq-item {
+        .acc-item {
             background: var(--white);
             border-radius: var(--border-radius);
             overflow: hidden;
@@ -488,39 +489,39 @@
             border: 1px solid transparent;
         }
 
-        .faq-item.active {
+        .acc-item.opened {
             border-color: var(--primary-color);
             box-shadow: 0 8px 25px rgba(216, 166, 169, 0.2);
         }
 
-        .faq-trigger {
+        .acc-trigger {
             width: 100%;
             background: linear-gradient(135deg, var(--white) 0%, #fdf8f8 100%);
             border: none;
-            padding: 20px 25px;
+            padding: 22px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
             text-align: left;
-            transition: background 0.3s ease;
-        }
-
-        .faq-trigger:hover { background: #fcf0f0; }
-
-        .faq-question-text {
             font-family: 'Montserrat', sans-serif;
             font-size: 1.1rem;
             font-weight: 600;
             color: var(--text-color);
-            padding-right: 20px;
+            outline: none;
         }
 
-        .faq-item.active .faq-question-text { color: var(--primary-color); }
+        .acc-trigger:hover {
+            background: #fcf0f0;
+        }
 
-        .faq-icon {
-            width: 32px;
-            height: 32px;
+        .acc-item.opened .acc-trigger {
+            color: var(--primary-color);
+        }
+
+        .acc-icon {
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             background: var(--secondary-color);
             color: var(--primary-color);
@@ -528,45 +529,34 @@
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55), background 0.3s;
-            transform: rotate(0deg); /* закрыто: стрелка вниз */
+            transition: transform 0.4s ease, background 0.3s;
         }
 
-        .faq-icon i {
+        .acc-icon i {
             font-size: 0.9rem;
-            padding-top: 2px;
+            margin-top: 2px;
         }
 
-        .faq-item.active .faq-icon {
-            transform: rotate(180deg); /* открыто: стрелка вверх */
+        /* Поворот стрелки при открытии */
+        .acc-item.opened .acc-icon {
+            transform: rotate(180deg);
             background: var(--primary-color);
             color: var(--white);
         }
 
-        .faq-answer-wrapper {
-            display: grid;
-            grid-template-rows: 0fr;
-            transition: grid-template-rows 0.4s ease-out;
+        /* Контент ответа */
+        .acc-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: var(--white);
         }
 
-        .faq-item.active .faq-answer-wrapper { grid-template-rows: 1fr; }
-
-        .faq-answer-inner { overflow: hidden; }
-
-        .faq-answer-inner p {
+        .acc-text {
             padding: 0 25px 25px 25px;
             color: #666;
             line-height: 1.6;
             margin: 0;
-            opacity: 0;
-            transform: translateY(-10px);
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-
-        .faq-item.active .faq-answer-inner p {
-            opacity: 1;
-            transform: translateY(0);
-            transition-delay: 0.1s;
         }
 
         /* --- ПРЕПОДАВАТЕЛИ --- */
@@ -778,7 +768,7 @@
             gap: 10px;
             margin-top: auto;
         }
-
+        
         .tg-btn:hover { background-color: #0077b5; }
 
         .map-container {
@@ -789,7 +779,7 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             display: flex;
         }
-
+        
         .map-container iframe { flex: 1; border: none; }
 
         /* --- CTA БАННЕР --- */
@@ -898,9 +888,9 @@
             box-shadow: 0 5px 15px rgba(216, 166, 169, 0.4);
             border: 2px solid rgba(255, 255, 255, 0.3);
         }
-
+        
         .scroll-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
-
+        
         .scroll-to-top:hover {
             background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
             transform: translateY(-5px);
@@ -1005,7 +995,7 @@
             cursor: pointer;
             transition: color 0.3s;
         }
-
+        
         .mobile-close-btn:hover { color: var(--primary-color); }
 
         /* --- ЛАЙТБОКС --- */
@@ -1255,28 +1245,33 @@
             .map-container { min-height: 300px; }
 
             /* --- СЛАЙДЕРЫ ДЛЯ МОБИЛЬНЫХ --- */
-            .teachers-grid,
+            .teachers-grid, 
             .gallery-grid {
                 display: flex;
                 overflow-x: auto;
                 gap: 20px;
                 scroll-snap-type: x mandatory;
                 padding-bottom: 20px;
+                /* Скрываем скроллбар */
                 -ms-overflow-style: none;
                 scrollbar-width: none;
             }
 
             .teachers-grid::-webkit-scrollbar,
-            .gallery-grid::-webkit-scrollbar { display: none; }
+            .gallery-grid::-webkit-scrollbar {
+                display: none;
+            }
 
-            .teacher-card,
+            .teacher-card, 
             .gallery-item {
-                flex: 0 0 85%;
+                flex: 0 0 85%; /* Карточка занимает 85% ширины экрана */
                 scroll-snap-align: center;
                 height: auto;
             }
-
-            .gallery-item { aspect-ratio: 4/3; }
+            
+            .gallery-item {
+                aspect-ratio: 4/3;
+            }
 
             .lightbox-prev { left: 10px; }
             .lightbox-next { right: 10px; }
@@ -1351,7 +1346,7 @@
         <div class="slide active slide-banner2" style="background-image: url('https://images.unsplash.com/photo-1658281381502-8f73b17b0253?q=80&w=1170&auto=format&fit=crop');" alt="Балетный класс с ученицами"></div>
         <div class="slide slide-banner3" style="background-image: url('https://images.unsplash.com/photo-1699977635592-a670f05fa641?ixlib=rb-4.1.0&auto=format&fit=crop&w=1350&q=80');" alt="Балерина в пуантах"></div>
         <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1518834107812-67b0b7c58434?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');" alt="Занятие балетом у станка"></div>
-
+        
         <div class="slider-indicators">
             <div class="indicator active" data-slide="0"></div>
             <div class="indicator" data-slide="1"></div>
@@ -1594,84 +1589,75 @@
         </div>
     </section>
 
-    <!-- FAQ Section -->
-    <section id="faq" style="background-color: var(--white);">
+    <!-- FAQ Section (С НОВЫМИ КЛАССАМИ) -->
+    <section id="faq-rebuilt" style="background-color: var(--white);">
         <div class="container">
             <h2 class="section-title reveal">Часто задаваемые вопросы</h2>
-            <div class="faq-container">
-
+            
+            <div class="acc-container">
+                
                 <!-- Вопрос 1 -->
-                <div class="faq-item reveal">
-                    <button class="faq-trigger" type="button" aria-expanded="false">
-                        <span class="faq-question-text">Что нужно взять на первое занятие?</span>
-                        <span class="faq-icon" aria-hidden="true">
+                <div class="acc-item reveal">
+                    <button class="acc-trigger" type="button">
+                        <span>Что нужно взять на первое занятие?</span>
+                        <div class="acc-icon">
                             <i class="fas fa-chevron-down"></i>
-                        </span>
-                    </button>
-                    <div class="faq-answer-wrapper" aria-hidden="true">
-                        <div class="faq-answer-inner">
-                            <p>Для первого занятия достаточно удобной спортивной одежды (лосины/леггинсы, футболка или топ) и носков с нескользящей подошвой. Если есть — можно принести балетки. Воду и хорошее настроение обязательно!</p>
                         </div>
+                    </button>
+                    <div class="acc-content">
+                        <p class="acc-text">Для первого занятия достаточно удобной спортивной одежды (лосины/леггинсы, футболка или топ) и носков с нескользящей подошвой. Если есть — можно принести балетки. Воду и хорошее настроение обязательно!</p>
                     </div>
                 </div>
 
                 <!-- Вопрос 2 -->
-                <div class="faq-item reveal">
-                    <button class="faq-trigger" type="button" aria-expanded="false">
-                        <span class="faq-question-text">Можно ли заниматься без подготовки?</span>
-                        <span class="faq-icon" aria-hidden="true">
+                <div class="acc-item reveal">
+                    <button class="acc-trigger" type="button">
+                        <span>Можно ли заниматься без подготовки?</span>
+                        <div class="acc-icon">
                             <i class="fas fa-chevron-down"></i>
-                        </span>
-                    </button>
-                    <div class="faq-answer-wrapper" aria-hidden="true">
-                        <div class="faq-answer-inner">
-                            <p>Конечно! У нас есть группы для начинающих всех возрастов. Наши педагоги подберут нагрузку индивидуально и помогут освоить базовые элементы с нуля.</p>
                         </div>
+                    </button>
+                    <div class="acc-content">
+                        <p class="acc-text">Конечно! У нас есть группы для начинающих всех возрастов. Наши педагоги подберут нагрузку индивидуально и помогут освоить базовые элементы с нуля.</p>
                     </div>
                 </div>
 
                 <!-- Вопрос 3 -->
-                <div class="faq-item reveal">
-                    <button class="faq-trigger" type="button" aria-expanded="false">
-                        <span class="faq-question-text">С какого возраста принимаете детей?</span>
-                        <span class="faq-icon" aria-hidden="true">
+                <div class="acc-item reveal">
+                    <button class="acc-trigger" type="button">
+                        <span>С какого возраста принимаете детей?</span>
+                        <div class="acc-icon">
                             <i class="fas fa-chevron-down"></i>
-                        </span>
-                    </button>
-                    <div class="faq-answer-wrapper" aria-hidden="true">
-                        <div class="faq-answer-inner">
-                            <p>Мы работаем с детьми от 3 лет. Для малышей есть группы ритмики и предбалетной подготовки, где дети учатся чувствовать музыку и свое тело в игровой форме.</p>
                         </div>
+                    </button>
+                    <div class="acc-content">
+                        <p class="acc-text">Мы работаем с детьми от 3 лет. Для малышей есть группы ритмики и предбалетной подготовки, где дети учатся чувствовать музыку и свое тело в игровой форме.</p>
                     </div>
                 </div>
 
                 <!-- Вопрос 4 -->
-                <div class="faq-item reveal">
-                    <button class="faq-trigger" type="button" aria-expanded="false">
-                        <span class="faq-question-text">Когда можно вставать на пуанты?</span>
-                        <span class="faq-icon" aria-hidden="true">
+                <div class="acc-item reveal">
+                    <button class="acc-trigger" type="button">
+                        <span>Когда можно вставать на пуанты?</span>
+                        <div class="acc-icon">
                             <i class="fas fa-chevron-down"></i>
-                        </span>
-                    </button>
-                    <div class="faq-answer-wrapper" aria-hidden="true">
-                        <div class="faq-answer-inner">
-                            <p>На пуанты допускаются ученики с хорошей физической подготовкой, обычно после 1-2 лет регулярных занятий классическим танцем. Решение принимается педагогом индивидуально для безопасности здоровья.</p>
                         </div>
+                    </button>
+                    <div class="acc-content">
+                        <p class="acc-text">На пуанты допускаются ученики с хорошей физической подготовкой, обычно после 1-2 лет регулярных занятий классическим танцем. Решение принимается педагогом индивидуально для безопасности здоровья.</p>
                     </div>
                 </div>
 
                 <!-- Вопрос 5 -->
-                <div class="faq-item reveal">
-                    <button class="faq-trigger" type="button" aria-expanded="false">
-                        <span class="faq-question-text">Есть ли пробное занятие?</span>
-                        <span class="faq-icon" aria-hidden="true">
+                <div class="acc-item reveal">
+                    <button class="acc-trigger" type="button">
+                        <span>Есть ли пробное занятие?</span>
+                        <div class="acc-icon">
                             <i class="fas fa-chevron-down"></i>
-                        </span>
-                    </button>
-                    <div class="faq-answer-wrapper" aria-hidden="true">
-                        <div class="faq-answer-inner">
-                            <p>Да! Первое пробное занятие бесплатное. Это отличная возможность познакомиться с педагогом, посмотреть зал и понять, подходит ли вам направление.</p>
                         </div>
+                    </button>
+                    <div class="acc-content">
+                        <p class="acc-text">Да! Первое пробное занятие бесплатное. Это отличная возможность познакомиться с педагогом, посмотреть зал и понять, подходит ли вам направление.</p>
                     </div>
                 </div>
 
@@ -1684,6 +1670,7 @@
         <div class="container">
             <h2 class="section-title reveal">Наши педагоги</h2>
             <div class="teachers-grid">
+                <!-- 1 -->
                 <div class="teacher-card reveal">
                     <div class="teacher-img-wrap">
                         <img src="https://images.unsplash.com/photo-1518834107812-67b0b7c58434?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Анна Павлова" class="teacher-img">
@@ -1692,6 +1679,7 @@
                     <span class="teacher-role">Прима-балерина</span>
                     <p class="teacher-bio">Выпускница АРБ им. Вагановой. Солистка Мариинского театра (2005-2018). Педагогический стаж 10 лет.</p>
                 </div>
+                <!-- 2 -->
                 <div class="teacher-card reveal">
                     <div class="teacher-img-wrap">
                         <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=600&auto=format&fit=crop&q=60" alt="Мария Иванова" class="teacher-img" loading="lazy">
@@ -1700,6 +1688,7 @@
                     <span class="teacher-role">Педагог классики</span>
                     <p class="teacher-bio">Выпускница Московской академии хореографии. Опыт преподавания 15 лет.</p>
                 </div>
+                <!-- 3 -->
                 <div class="teacher-card reveal">
                     <div class="teacher-img-wrap">
                         <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Елена Смирнова" class="teacher-img" loading="lazy">
@@ -1708,6 +1697,7 @@
                     <span class="teacher-role">Инструктор по растяжке</span>
                     <p class="teacher-bio">Специалист по физической подготовке. Дипломированный тренер по стретчингу и пилатесу.</p>
                 </div>
+                <!-- 4 -->
                 <div class="teacher-card reveal">
                     <div class="teacher-img-wrap">
                         <img src="https://images.unsplash.com/photo-1548142813-c348350df52b?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Ольга Петрова" class="teacher-img" loading="lazy">
@@ -1716,6 +1706,7 @@
                     <span class="teacher-role">Детские группы</span>
                     <p class="teacher-bio">Специализация - работа с детьми 3-12 лет. Авторская методика обучения через игру.</p>
                 </div>
+                <!-- 5 -->
                 <div class="teacher-card reveal">
                     <div class="teacher-img-wrap">
                         <img src="https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Виктория Ленская" class="teacher-img" loading="lazy">
@@ -1724,6 +1715,7 @@
                     <span class="teacher-role">Хореограф-постановщик</span>
                     <p class="teacher-bio">Постановщик спектаклей для детских и взрослых коллективов. Лауреат международных конкурсов.</p>
                 </div>
+                <!-- 6 -->
                 <div class="teacher-card reveal">
                     <div class="teacher-img-wrap">
                         <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Дарья Морозова" class="teacher-img" loading="lazy">
@@ -1912,39 +1904,41 @@
             showReview(currentReview);
         });
 
-        // ========== FAQ АККОРДЕОН (ИСПРАВЛЕННАЯ ЛОГИКА) ==========
-        const faqItems = document.querySelectorAll('.faq-item');
+        // ========== НОВЫЙ СКРИПТ FAQ (MAX-HEIGHT METHOD) ==========
+        // Этот метод использует вычисление высоты через JavaScript, что гарантирует анимацию
+        document.addEventListener('DOMContentLoaded', function() {
+            const accItems = document.querySelectorAll('.acc-item');
+            
+            accItems.forEach(item => {
+                const trigger = item.querySelector('.acc-trigger');
+                
+                trigger.addEventListener('click', (e) => {
+                    e.preventDefault(); // Предотвращаем любые странные поведения браузера
+                    
+                    const isOpen = item.classList.contains('opened');
+                    const content = item.querySelector('.acc-content');
+                    
+                    // 1. Сначала закрываем все остальные
+                    accItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('opened');
+                            // Принудительно ставим высоту в 0
+                            otherItem.querySelector('.acc-content').style.maxHeight = null; 
+                        }
+                    });
 
-        faqItems.forEach((item) => {
-            const trigger = item.querySelector('.faq-trigger');
-            const answerWrapper = item.querySelector('.faq-answer-wrapper');
-
-            // стартовое состояние: закрыто
-            item.classList.remove('active');
-            if (trigger) trigger.setAttribute('aria-expanded', 'false');
-            if (answerWrapper) answerWrapper.setAttribute('aria-hidden', 'true');
-
-            trigger.addEventListener('click', () => {
-                const isOpen = item.classList.contains('active');
-
-                // закрываем все
-                faqItems.forEach((otherItem) => {
-                    otherItem.classList.remove('active');
-                    const otherTrigger = otherItem.querySelector('.faq-trigger');
-                    const otherAnswer = otherItem.querySelector('.faq-answer-wrapper');
-                    if (otherTrigger) otherTrigger.setAttribute('aria-expanded', 'false');
-                    if (otherAnswer) otherAnswer.setAttribute('aria-hidden', 'true');
+                    // 2. Логика для текущего элемента
+                    if (isOpen) {
+                        // Если был открыт - закрываем
+                        item.classList.remove('opened');
+                        content.style.maxHeight = null;
+                    } else {
+                        // Если был закрыт - открываем
+                        item.classList.add('opened');
+                        // Ставим высоту равную реальной высоте контента
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    }
                 });
-
-                // переключаем текущий
-                if (!isOpen) {
-                    item.classList.add('active');
-                    trigger.setAttribute('aria-expanded', 'true');
-                    if (answerWrapper) answerWrapper.setAttribute('aria-hidden', 'false');
-                } else {
-                    trigger.setAttribute('aria-expanded', 'false');
-                    if (answerWrapper) answerWrapper.setAttribute('aria-hidden', 'true');
-                }
             });
         });
 
@@ -2012,7 +2006,7 @@
             const originalText = submitBtn.textContent;
             submitBtn.textContent = 'Отправка...';
             submitBtn.disabled = true;
-
+            
             setTimeout(() => {
                 formContainer.style.display = 'none';
                 successMessage.style.display = 'block';
