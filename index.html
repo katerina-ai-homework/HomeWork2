@@ -470,8 +470,7 @@
             color: #777;
         }
 
-        /* --- FAQ АККОРДЕОН (Переписанный с нуля) --- */
-        /* Используем новые классы acc-* чтобы избежать конфликтов */
+        /* --- FAQ АККОРДЕОН --- */
         .acc-container {
             max-width: 800px;
             margin: 0 auto;
@@ -511,13 +510,8 @@
             outline: none;
         }
 
-        .acc-trigger:hover {
-            background: #fcf0f0;
-        }
-
-        .acc-item.opened .acc-trigger {
-            color: var(--primary-color);
-        }
+        .acc-trigger:hover { background: #fcf0f0; }
+        .acc-item.opened .acc-trigger { color: var(--primary-color); }
 
         .acc-icon {
             width: 30px;
@@ -532,19 +526,9 @@
             transition: transform 0.4s ease, background 0.3s;
         }
 
-        .acc-icon i {
-            font-size: 0.9rem;
-            margin-top: 2px;
-        }
+        .acc-icon i { font-size: 0.9rem; margin-top: 2px; }
+        .acc-item.opened .acc-icon { transform: rotate(180deg); background: var(--primary-color); color: var(--white); }
 
-        /* Поворот стрелки при открытии */
-        .acc-item.opened .acc-icon {
-            transform: rotate(180deg);
-            background: var(--primary-color);
-            color: var(--white);
-        }
-
-        /* Контент ответа */
         .acc-content {
             max-height: 0;
             overflow: hidden;
@@ -552,12 +536,7 @@
             background: var(--white);
         }
 
-        .acc-text {
-            padding: 0 25px 25px 25px;
-            color: #666;
-            line-height: 1.6;
-            margin: 0;
-        }
+        .acc-text { padding: 0 25px 25px 25px; color: #666; line-height: 1.6; margin: 0; }
 
         /* --- ПРЕПОДАВАТЕЛИ --- */
         .teachers-grid {
@@ -853,16 +832,47 @@
             margin-bottom: 30px;
             animation: float 3s ease-in-out infinite;
         }
-
-        .cta-visual i {
-            font-size: 4rem;
-            color: rgba(255,255,255,0.9);
+        
+        .cta-visual img {
+            width: 90px;
+            height: auto;
             filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));
         }
 
         @keyframes float {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
+        }
+        
+        /* --- МОБИЛЬНЫЕ ПОДСКАЗКИ ПРОКРУТКИ --- */
+        .mobile-swipe-hint {
+            display: none;
+            text-align: center;
+            color: var(--primary-color);
+            margin-top: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, rgba(216, 166, 169, 0.15), rgba(201, 166, 144, 0.15));
+            border-radius: 30px;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .mobile-swipe-hint i {
+            font-size: 1.3rem;
+            animation: swipe-hand 2s ease-in-out infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes swipe-hand {
+            0% { transform: translateX(-8px) rotate(-5deg); }
+            50% { transform: translateX(8px) rotate(5deg); }
+            100% { transform: translateX(-8px) rotate(-5deg); }
         }
 
         /* --- КНОПКА "НАВЕРХ" --- */
@@ -1086,6 +1096,23 @@
             text-align: center;
             transition: all 0.3s ease;
             border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .achievement-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(216, 166, 169, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .achievement-card:hover::before {
+            left: 100%;
         }
 
         .achievement-card:hover {
@@ -1101,9 +1128,38 @@
             font-family: 'Playfair Display', serif;
             display: block;
             margin-bottom: 10px;
+            animation: countUp 0.5s ease-out;
         }
 
         .achievement-label { font-size: 0.95rem; color: var(--text-color); }
+
+        /* Анимация счетчика */
+        @keyframes countUp {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Пульсирующая иконка для карточек достижений */
+        .achievement-card::after {
+            content: '✨';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.2rem;
+            opacity: 0;
+            transition: all 0.3s ease;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+
+        .achievement-card:hover::after {
+            opacity: 1;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.6; }
+            50% { transform: scale(1.3) rotate(180deg); opacity: 1; }
+        }
 
         /* --- МОДАЛЬНОЕ ОКНО --- */
         .modal-overlay {
@@ -1219,38 +1275,6 @@
             font-weight: 600;
         }
 
-        /* --- ИНДИКАТОР ПРОКРУТКИ (МОБИЛЬНЫЙ) --- */
-        .swipe-indicator {
-            display: none; /* По умолчанию скрыт */
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
-            padding: 10px;
-            background: linear-gradient(135deg, rgba(216, 166, 169, 0.1), rgba(201, 166, 144, 0.1));
-            border-radius: 30px;
-            width: fit-content;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .swipe-indicator i {
-            font-size: 1.5rem;
-            color: var(--primary-color);
-            animation: swipeHand 1.5s ease-in-out infinite;
-        }
-
-        .swipe-indicator span {
-            font-size: 0.9rem;
-            color: var(--text-color);
-            font-weight: 500;
-        }
-
-        @keyframes swipeHand {
-            0%, 100% { transform: translateX(0); }
-            50% { transform: translateX(10px); }
-        }
-
         /* --- МЕДИА ЗАПРОСЫ --- */
         @media (max-width: 992px) {
             .teachers-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1264,7 +1288,25 @@
             .burger-menu { display: flex; }
             .nav-list { display: none; }
             .mobile-nav { display: flex; }
-            .achievements-grid { grid-template-columns: repeat(2, 1fr); }
+            .achievements-grid { 
+                display: flex;
+                overflow-x: auto;
+                gap: 15px;
+                scroll-snap-type: x mandatory;
+                padding-bottom: 15px;
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            
+            .achievements-grid::-webkit-scrollbar {
+                display: none;
+            }
+            
+            .achievement-card {
+                flex: 0 0 65%;
+                scroll-snap-align: center;
+                min-width: 200px;
+            }
             .hero-slider { height: 350px; }
             .section-title { font-size: 2rem; }
             .contacts-wrapper { flex-direction: column; }
@@ -1276,9 +1318,38 @@
             .scroll-to-top { bottom: 20px; right: 20px; width: 45px; height: 45px; font-size: 1.3rem; }
             .map-container { min-height: 300px; }
 
+            /* --- ПОКАЗЫВАЕМ ПОДСКАЗКУ ПРОКРУТКИ НА МОБИЛЬНЫХ --- */
+            .mobile-swipe-hint { display: flex; }
+            
+            /* --- СЛАЙДЕР ДОСТИЖЕНИЙ НА МОБИЛЬНЫХ --- */
+            .achievements-grid {
+                display: flex;
+                overflow-x: auto;
+                gap: 15px;
+                scroll-snap-type: x mandatory;
+                padding-bottom: 15px;
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            
+            .achievements-grid::-webkit-scrollbar {
+                display: none;
+            }
+            
+            .achievement-card {
+                flex: 0 0 65%;
+                scroll-snap-align: center;
+                min-width: 200px;
+            }
+            
+            .achievements-swipe-hint {
+                display: flex;
+            }
+
             /* --- СЛАЙДЕРЫ ДЛЯ МОБИЛЬНЫХ --- */
             .teachers-grid, 
-            .gallery-grid {
+            .gallery-grid,
+            .achievements-grid {
                 display: flex;
                 overflow-x: auto;
                 gap: 20px;
@@ -1290,29 +1361,33 @@
             }
 
             .teachers-grid::-webkit-scrollbar,
-            .gallery-grid::-webkit-scrollbar {
+            .gallery-grid::-webkit-scrollbar,
+            .achievements-grid::-webkit-scrollbar {
                 display: none;
             }
 
             .teacher-card, 
-            .gallery-item {
-                flex: 0 0 85%; /* Карточка занимает 85% ширины экрана */
+            .gallery-item,
+            .achievement-card {
+                flex: 0 0 70%; /* Карточка занимает 70% ширины экрана */
                 scroll-snap-align: center;
                 height: auto;
+                min-width: 250px;
             }
             
             .gallery-item {
                 aspect-ratio: 4/3;
             }
 
+            /* Подсказка для свайпа достижений */
+            .achievements-swipe-hint {
+                display: flex;
+                margin-top: 15px;
+            }
+
             .lightbox-prev { left: 10px; }
             .lightbox-next { right: 10px; }
             .lightbox-nav { width: 40px; height: 40px; font-size: 1.5rem; }
-
-            /* Показываем индикатор прокрутки на мобильных */
-            .swipe-indicator {
-                display: flex;
-            }
         }
 
         @media (max-width: 576px) {
@@ -1457,6 +1532,12 @@
                     <span class="achievement-label">Лауреатов<br>конкурсов</span>
                 </div>
             </div>
+            
+            <!-- Подсказка для мобильных (свайп) -->
+            <div class="mobile-swipe-hint achievements-swipe-hint">
+                <i class="fas fa-hand-pointer"></i>
+                <span>Листайте достижения</span>
+            </div>
         </div>
     </section>
 
@@ -1517,10 +1598,7 @@
     <section id="gallery" style="background-color: var(--white);">
         <div class="container">
             <h2 class="section-title reveal">Галерея</h2>
-            <div class="swipe-indicator">
-                <i class="fas fa-hand-pointer"></i>
-                <span>Листайте</span>
-            </div>
+
             <div class="gallery-grid">
                 <div class="gallery-item reveal" data-index="0">
                     <img src="https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=800&auto=format&fit=crop&q=80" alt="Балетный класс" loading="lazy">
@@ -1555,6 +1633,12 @@
                     <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
                 </div>
             </div>
+            
+            <!-- Подсказка для мобильных (свайп) -->
+            <div class="mobile-swipe-hint">
+                <i class="fas fa-hand-pointer"></i>
+                <span>Листайте влево/вправо</span>
+            </div>
         </div>
     </section>
 
@@ -1573,10 +1657,7 @@
     <section id="schedule" class="schedule-section">
         <div class="container">
             <h2 class="section-title reveal">Расписание занятий</h2>
-            <div class="swipe-indicator">
-                <i class="fas fa-hand-pointer"></i>
-                <span>Листайте</span>
-            </div>
+
             <div class="schedule-table-container">
                 <table class="schedule-table">
                     <thead>
@@ -1631,6 +1712,12 @@
                 </table>
             </div>
             <p class="schedule-note">* Точное расписание и наличие мест в группах уточняйте у администратора. Возможны изменения.</p>
+            
+            <!-- Подсказка для мобильных (свайп) -->
+            <div class="mobile-swipe-hint">
+                <i class="fas fa-hand-pointer"></i>
+                <span>Листайте расписание</span>
+            </div>
         </div>
     </section>
 
@@ -1714,10 +1801,7 @@
     <section id="teachers">
         <div class="container">
             <h2 class="section-title reveal">Наши педагоги</h2>
-            <div class="swipe-indicator">
-                <i class="fas fa-hand-pointer"></i>
-                <span>Листайте</span>
-            </div>
+
             <div class="teachers-grid">
                 <!-- 1 -->
                 <div class="teacher-card reveal">
@@ -1774,6 +1858,12 @@
                     <p class="teacher-bio">Создатель методики BodyBallet® для взрослых. Специалист по фитнесу.</p>
                 </div>
             </div>
+            
+            <!-- Подсказка для мобильных (свайп) -->
+            <div class="mobile-swipe-hint">
+                <i class="fas fa-hand-pointer"></i>
+                <span>Листайте педагогов</span>
+            </div>
         </div>
     </section>
 
@@ -1807,18 +1897,8 @@
     <section class="cta-banner">
         <div class="container">
             <div class="cta-visual">
-                <svg width="80" height="80" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Пуанты - балетные туфельки -->
-                    <ellipse cx="35" cy="75" rx="20" ry="12" fill="rgba(255,255,255,0.9)"/>
-                    <ellipse cx="65" cy="75" rx="20" ry="12" fill="rgba(255,255,255,0.9)"/>
-                    <path d="M20 75 L20 45 Q20 25 35 20 Q50 25 50 45 L50 75" fill="rgba(255,255,255,0.9)"/>
-                    <path d="M50 75 L50 45 Q50 25 65 20 Q80 25 80 45 L80 75" fill="rgba(255,255,255,0.9)"/>
-                    <!-- Шнуровка -->
-                    <line x1="30" y1="35" x2="40" y2="35" stroke="#d8a6a9" stroke-width="2"/>
-                    <line x1="30" y1="45" x2="40" y2="45" stroke="#d8a6a9" stroke-width="2"/>
-                    <line x1="60" y1="35" x2="70" y2="35" stroke="#d8a6a9" stroke-width="2"/>
-                    <line x1="60" y1="45" x2="70" y2="45" stroke="#d8a6a9" stroke-width="2"/>
-                </svg>
+                <!-- Заменили следы на пуанты -->
+                <img src="https://img.icons8.com/ios-filled/100/ffffff/ballet-shoes.png" alt="Пуанты">
             </div>
             <h2>Готовы сделать первый шаг?</h2>
             <p>Запишитесь на бесплатное пробное занятие и погрузитесь в мир балета с нашими педагогами.</p>
